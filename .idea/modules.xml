@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/cms.iml" filepath="$PROJECT_DIR$/.idea/cms.iml" />
+      <module fileurl="file://C:/xampp/htdocs/noriu2/.idea/noriu2.iml" filepath="C:/xampp/htdocs/noriu2/.idea/noriu2.iml" />
+    </modules>
+  </component>
+</project>
