@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    p #[strong Name:] #{feature.name}
+    p #[strong Description:] #{feature.description}
+    p #[strong Models:]&nbsp;
+        each model in feature_models
+            a(href=model.url) #{model.name}
+        else
+            p There are no models with this feature
