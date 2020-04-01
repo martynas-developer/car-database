@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    h1 #{title}
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg
+
+    form(method='POST' action='')
+        div.form-group
+            label(for='name') Brand:
+            input#name.form-control(type='text' required=true placeholder='name of brand' name='name' value=(undefined===brand ? '' : brand.name))
+        div.form-group
+            label(for='founded') Founded:
+            input#founded.form-control(type='date' placeholder='Date' name='founded' value=(undefined === brand ? '' : brand.founded))
+        button.btn.btn-primary(type='submit') Submit

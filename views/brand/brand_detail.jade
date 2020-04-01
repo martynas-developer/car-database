@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    h1 Brand: #{brand.name}
+
+    div(style='margin-left:20px;margin-top:20px')
+
+        h4 Models
+
+        dl
+            each model in brand_models
+                dt
+                    a(href=model.url) #{model.name}
+
+            else
+                p This brand has no models
