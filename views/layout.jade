@@ -2,6 +2,11 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/sidenav.css')
+    link(rel='script', href='/javascripts/bootstrap.min.js')
   body
-    block content
+    div(class='d-flex')
+      include sidenav.jade
+      div(id='page-content-wrapper' class='container-fluid')
+        block content
