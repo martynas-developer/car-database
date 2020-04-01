@@ -129,7 +129,6 @@ exports.brand_delete_get = function(req, res, next) {
         }
         res.render('brand/brand_delete', { title: 'Delete Brand', brand: results.brand, brand_models: results.brand_models } );
     });
-
 };
 
 exports.brand_delete_post = function(req, res, next) {
@@ -147,7 +146,6 @@ exports.brand_delete_post = function(req, res, next) {
             return;
         }
         else {
-            // Author has no books. Delete object and redirect to the list of authors.
             Brand.findByIdAndRemove(req.body.brandid, function deleteBrand(err) {
                 if (err) { return next(err); }
                 res.redirect('/catalog/brands')

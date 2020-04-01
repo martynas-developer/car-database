@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    h1 #{title}: #{feature.name}
+    p= feature.description
+
+    if feature_models.length
+
+        p #[strong Delete the following models before attempting to delete this feature.]
+
+        div(style='margin-left:20px;margin-top:20px')
+
+            h4 models
+
+            dl
+            each model in feature_models
+                dt
+                    a(href=model.url) #{model.name}
+
+    else
+        p Do you really want to delete this Feature?
+
+        form(method='POST' action='')
+            div.form-group
+                input#feature.form-control(type='hidden',name='featureid', required='true', value=feature._id )
+
+            button.btn.btn-primary(type='submit') Delete

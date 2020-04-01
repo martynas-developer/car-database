@@ -92,13 +92,46 @@ exports.feature_create_post =  [
     }
 ];
 
-// exports.feature_delete_get = function(req, res) {
-//
-// };
-//
-// exports.feature_delete_post = function(req, res) {
-//
-// };
+exports.feature_delete_get = function(req, res, next) {
+    async.parallel({
+        feature: function(callback) {
+            Feature.findById(req.params.id).exec(callback)
+        },
+        feature_models: function(callback) {
+            Model.find({ 'feature': req.params.id }).exec(callback)
+        },
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.feature==null) {
+            res.redirect('/catalog/features');
+        }
+        res.render('feature/feature_delete', { title: 'Delete Feature', feature: results.feature, feature_models: results.feature_models } );
+    });
+};
+
+exports.feature_delete_post = function(req, res, next) {
+
+    async.parallel({
+        feature: function(callback) {
+            Feature.findById(req.params.id).exec(callback)
+        },
+        feature_models: function(callback) {
+            Model.find({ 'feature': req.params.id }).exec(callback)
+        },
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.feature_models.length > 0) {
+            res.render('feature/feature_delete', { title: 'Delete Feature', feature: results.feature, feature_models: results.feature_models } );
+            return;
+        }
+        else {
+            Feature.findByIdAndRemove(req.body.featureid, function deleteFeature(err) {
+                if (err) { return next(err); }
+                res.redirect('/catalog/features')
+            })
+        }
+    });
+};
 //
 // exports.feature_update_get = function(req, res) {
 //
