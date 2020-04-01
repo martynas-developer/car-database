@@ -18,9 +18,12 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     },
-    fileFilter: imageFilter
 });
-const upload = multer({storage: storage});
+
+const upload = multer({
+    storage: storage,
+    fileFilter: imageFilter.imageFilter
+});
 
 exports.index = function(req, res) {
     async.parallel({
@@ -74,9 +77,42 @@ exports.brand_create_get = function(req, res) {
     res.render('brand/brand_form', { title: 'Create Brand'});
 };
 
-exports.brand_create_post = [
-    upload.single('logo'),
+exports.brand_upload_logo_get = function(req, res) {
+    Brand.findById(req.params.id)
+        .exec(function (err, brand) {
+            if (err) { return next(err); }
+            if (brand==null) {
+                res.redirect('/catalog/brands');
+            }
+            res.render('brand/brand_logo_form', { title: 'Upload Brand Logo', brand: brand});
+        })
+};
 
+var logoUpload = upload.single('logo');
+
+exports.brand_upload_logo_post = function(req, res) {
+    Brand.findById(req.params.id)
+        .exec(function (err, brand) {
+            if (err) { return next(err); }
+            if (brand==null) {
+                res.redirect('/catalog/brands');
+            }
+            logoUpload(req, res, (err) => {
+                if (err) {
+                    res.render('brand/brand_logo_form', {title: 'Upload Brand Logo', brand: brand, error: err.message});
+                    return;
+                }
+                brand.logo = req.file.filename;
+                brand.save(function (err) {
+                    if (err) { return next(err); }
+                    res.redirect(brand.url);
+                });
+            });
+        })
+};
+
+exports.brand_create_post = [
+    upload.none(),
     // Validate fields.
     body('name').isLength({ min: 1 }).trim().withMessage('brand name must be specified.')
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
@@ -95,7 +131,6 @@ exports.brand_create_post = [
             {
                 name: req.body.name,
                 founded: req.body.founded,
-                logo: req.file.filename,
             }
         );
 
@@ -113,14 +148,12 @@ exports.brand_create_post = [
 
                     if (found_brand) {
                         res.redirect(found_brand.url);
-                    }
-                    else {
+                    } else {
                         brand.save(function (err) {
                             if (err) { return next(err); }
                             // brand saved. Redirect to genre detail page.
                             res.redirect(brand.url);
                         });
-
                     }
                 });
         }

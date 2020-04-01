@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    h1 #{title} #{brand.name}
+    | #{errors}
+    if error
+        ul
+            li!= error
+
+    form(method='POST' action='' enctype='multipart/form-data')
+        div.form-group
+            input(type='file' name='logo')
+
+        button.btn.btn-primary(type='submit') Submit

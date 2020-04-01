@@ -13,6 +13,9 @@ router.get('/', brand_controller.index);
 router.get('/brand/create', brand_controller.brand_create_get);
 router.post('/brand/create', brand_controller.brand_create_post);
 
+router.get('/brand/:id/upload_logo', brand_controller.brand_upload_logo_get);
+router.post('/brand/:id/upload_logo', brand_controller.brand_upload_logo_post);
+
 router.get('/brand/:id/delete', brand_controller.brand_delete_get);
 router.post('/brand/:id/delete', brand_controller.brand_delete_post);
 
