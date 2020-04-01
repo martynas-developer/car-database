@@ -151,13 +151,10 @@ exports.feature_update_post =  [
 
     sanitizeBody('*').escape(),
 
-    // Process request after validation and sanitization.
     (req, res, next) => {
 
-        // Extract the validation errors from a request.
         const errors = validationResult(req);
 
-        // Create a feature object with escaped and trimmed data.
         var feature = new Feature(
             {
                 name: req.body.name,
@@ -172,9 +169,9 @@ exports.feature_update_post =  [
             return;
         }
         else {
-            Feature.findByIdAndUpdate(req.params.id, feature, {}, function (err, thefeature) {
+            Feature.findByIdAndUpdate(req.params.id, feature, {}, function (err, updateFeature) {
                 if (err) { return next(err); }
-                res.redirect(thefeature.url);
+                res.redirect(updateFeature.url);
             });
         }
     }

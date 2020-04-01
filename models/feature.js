@@ -9,10 +9,8 @@ var FeatureSchema = new Schema(
     }
 );
 
-FeatureSchema
-    .virtual('url')
-    .get(function () {
-        return '/catalog/feature/' + this._id;
-    });
+FeatureSchema.virtual('url').get(function () {
+    return '/catalog/feature/' + this._id;
+});
 
 module.exports = mongoose.model('Feature', FeatureSchema);

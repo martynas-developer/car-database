@@ -154,10 +154,49 @@ exports.brand_delete_post = function(req, res, next) {
     });
 };
 
-exports.brand_update_get = function(req, res) {
-
+exports.brand_update_get = function(req, res, next) {
+    Brand.findById(req.params.id)
+        .exec(function (err, brand) {
+            if (err) { return next(err); }
+            if (brand==null) {
+                res.redirect('/catalog/brands');
+            }
+            res.render('brand/brand_form', { title: 'Update Brand', brand: brand});
+        })
 };
 
-exports.brand_update_post = function(req, res) {
+exports.brand_update_post = [
 
-};
+    body('name').isLength({ min: 1 }).trim().withMessage('brand name must be specified.')
+        .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
+    body('founded', 'Invalid date').optional({ checkFalsy: true }).isISO8601(),
+
+    sanitizeBody('*').escape(),
+
+    (req, res, next) => {
+
+        const errors = validationResult(req);
+
+        var brand = new Brand(
+            {
+                name: req.body.name,
+                founded: req.body.founded,
+                _id: req.params.id //This is required, or a new ID will be assigned!
+            }
+        );
+
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render the form again with sanitized values/error messages.
+            res.render('brand/brand_form', { title: 'Create Brand', brand: brand, errors: errors.array()});
+            return;
+        }
+        else {
+
+            Brand.findByIdAndUpdate(req.params.id, brand, {}, function (err, updateBrand) {
+                if (err) { return next(err); }
+                res.redirect(updateBrand.url);
+            });
+        }
+    }
+];

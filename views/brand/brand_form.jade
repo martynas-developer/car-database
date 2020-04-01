@@ -14,5 +14,5 @@ block content
             input#name.form-control(type='text' required=true placeholder='name of brand' name='name' value=(undefined===brand ? '' : brand.name))
         div.form-group
             label(for='founded') Founded:
-            input#founded.form-control(type='date' placeholder='Date' name='founded' value=(undefined === brand ? '' : brand.founded))
+            input#founded.form-control(type='date' placeholder='Date' name='founded' value=(undefined === brand ? '' : brand.founded_yyyy_mm_dd))
         button.btn.btn-primary(type='submit') Submit

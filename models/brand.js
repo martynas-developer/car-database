@@ -11,16 +11,15 @@ var BrandSchema = new Schema(
     }
 );
 
-BrandSchema
-    .virtual('url')
-    .get(function () {
-        return '/catalog/brand/' + this._id;
-    });
+BrandSchema.virtual('url').get(function () {
+    return '/catalog/brand/' + this._id;
+});
 
-BrandSchema
-    .virtual('founded_formatted')
-    .get(function () {
-        return moment(this.founded).format('YYYY');
-    });
+BrandSchema.virtual('founded_formatted').get(function () {
+    return moment(this.founded).format('YYYY');
+});
 
+BrandSchema.virtual('founded_yyyy_mm_dd').get(function() {
+    return moment(this.founded).format('YYYY-MM-DD');
+});
 module.exports = mongoose.model('Brand', BrandSchema);

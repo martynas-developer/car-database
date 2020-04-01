@@ -180,7 +180,6 @@ exports.model_update_post = [
         }
         next();
     },
-    // Validate fields.
     body('name', 'Name must not be empty.').trim().isLength({ min: 1 }),
     body('type', 'Type must not be empty.').trim().isLength({ min: 1 }),
     body('brand', 'Brand must not be empty.').trim().isLength({ min: 1 }),
@@ -190,13 +189,10 @@ exports.model_update_post = [
     // https://github.com/express-validator/express-validator/issues/791
     //sanitizeBody('*').escape(),
     //sanitizeBody('feature.*').escape(),
-    // Process request after validation and sanitization.
     (req, res, next) => {
 
-        // Extract the validation errors from a request.
         const errors = validationResult(req);
 
-        // Create a Model object with escaped and trimmed data.
         var model = new Model(
             {
                 name: req.body.name,
@@ -209,8 +205,6 @@ exports.model_update_post = [
             });
 
         if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/error messages.
-
             async.parallel({
                 brands: function(callback) {
                     Brand.find(callback);
@@ -232,9 +226,9 @@ exports.model_update_post = [
             return;
         }
         else {
-            Model.findByIdAndUpdate(req.params.id, model, {}, function (err, themodel) {
+            Model.findByIdAndUpdate(req.params.id, model, {}, function (err, modelUpdate) {
                 if (err) { return next(err); }
-                res.redirect(themodel.url);
+                res.redirect(modelUpdate.url);
             });
         }
     }
