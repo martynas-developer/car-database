@@ -1,11 +1,26 @@
 var Brand = require('../models/brand');
 var Model = require('../models/model');
 var Feature = require('../models/feature');
-
+var imageFilter = require('../helpers/imageFilter');
 var async = require('async');
+var path = require('path');
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
+const multer = require('multer');
+const mkdirp = require('mkdirp');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = path.join(__dirname, '../public/uploads/brand');
+        mkdirp(dir, err => cb(err, dir));
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+    fileFilter: imageFilter
+});
+const upload = multer({storage: storage});
 
 exports.index = function(req, res) {
     async.parallel({
@@ -24,7 +39,7 @@ exports.index = function(req, res) {
 };
 
 exports.brand_list = function(req, res) {
-    Brand.find({}, 'name founded')
+    Brand.find({}, 'name founded logo')
         .sort([['name', 'ascending']])
         .exec(function (err, list_brands) {
             if (err) { return next(err); }
@@ -60,6 +75,7 @@ exports.brand_create_get = function(req, res) {
 };
 
 exports.brand_create_post = [
+    upload.single('logo'),
 
     // Validate fields.
     body('name').isLength({ min: 1 }).trim().withMessage('brand name must be specified.')
@@ -71,7 +87,6 @@ exports.brand_create_post = [
 
     // Process request after validation and sanitization.
     (req, res, next) => {
-
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
@@ -80,9 +95,9 @@ exports.brand_create_post = [
             {
                 name: req.body.name,
                 founded: req.body.founded,
+                logo: req.file.filename,
             }
         );
-
 
         if (!errors.isEmpty()) {
             // There are errors. Render the form again with sanitized values/error messages.
@@ -100,7 +115,6 @@ exports.brand_create_post = [
                         res.redirect(found_brand.url);
                     }
                     else {
-
                         brand.save(function (err) {
                             if (err) { return next(err); }
                             // brand saved. Redirect to genre detail page.
@@ -108,7 +122,6 @@ exports.brand_create_post = [
                         });
 
                     }
-
                 });
         }
     }

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,10 +12,11 @@ var parameters = require('./parameters');
 
 var app = express();
 
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://' + parameters.mongodb.user + ':' + parameters.mongodb.password + '@' + parameters.mongodb.cluster_url + '/test?retryWrites=true&w=majority';
+//database setup
+var mongoDB = 'mongodb://127.0.0.1:27017/test';
+//var mongoDB = 'mongodb+srv://' + parameters.mongodb.user + ':' + parameters.mongodb.password + '@' + parameters.mongodb.cluster_url + '/test?retryWrites=true&w=majority';
 mongoose.set('useFindAndModify', false);
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 

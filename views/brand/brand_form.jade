@@ -8,11 +8,14 @@ block content
             for error in errors
                 li!= error.msg
 
-    form(method='POST' action='')
+    form(method='POST' action='' enctype='multipart/form-data')
         div.form-group
             label(for='name') Brand:
             input#name.form-control(type='text' required=true placeholder='name of brand' name='name' value=(undefined===brand ? '' : brand.name))
         div.form-group
             label(for='founded') Founded:
             input#founded.form-control(type='date' placeholder='Date' name='founded' value=(undefined === brand ? '' : brand.founded_yyyy_mm_dd))
+        div.form-group
+            input(type='file' name='logo')
+
         button.btn.btn-primary(type='submit') Submit

@@ -8,5 +8,7 @@ block content
             li
                 a(href=brand.url) #{brand.name}
                 span  (#{brand.founded_formatted})
+                if brand.logo
+                    img(src='#{brand.logo_url}' height='50px')
         else
             li There are no brands.

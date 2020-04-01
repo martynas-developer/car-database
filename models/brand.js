@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var BrandSchema = new Schema(
     {
         name: {type: String, required: true, max: 100},
-        //logo
+        logo: {type: String},
         founded: {type: Date},
     }
 );
@@ -22,4 +22,9 @@ BrandSchema.virtual('founded_formatted').get(function () {
 BrandSchema.virtual('founded_yyyy_mm_dd').get(function() {
     return moment(this.founded).format('YYYY-MM-DD');
 });
+
+BrandSchema.virtual('logo_url').get(function() {
+    return '/uploads/brand/' + this.logo;
+});
+
 module.exports = mongoose.model('Brand', BrandSchema);
