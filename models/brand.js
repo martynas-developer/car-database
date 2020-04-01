@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var Schema = mongoose.Schema;
-
-var moment = require('moment');
 
 var BrandSchema = new Schema(
     {

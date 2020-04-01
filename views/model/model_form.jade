@@ -15,17 +15,25 @@ block content
         div.form-group
             label(for='brand') Brand:
             select#brand.form-control(type='select', placeholder='Select Brand' name='brand' required='true' )
+
                 for brand in brands
-                    if brand
-                        option(value=brand._id selected=(brand._id.toString()==brand.name ? 'selected' : false) ) #{brand.name}
+                    if model
+                        //- Handle GET form, where book.author is an object, and POST form, where it is a string.
+                        option(
+                            value=brand._id
+                            selected=(
+                                brand._id.toString() == model.brand._id
+                                || brand._id.toString() == model.name
+                            ) ? 'selected' : false
+                        ) #{brand.name}
                     else
                         option(value=brand._id) #{brand.name}
         div.form-group
             label(for='production_start') production started:
-            input#production_start.form-control(type='date' placeholder='Date' name='production_start' value=(undefined === model ? '' : model.production_start))
+            input#production_start.form-control(type='date' placeholder='Date' name='production_start' value=(undefined === model ? '' : model.production_start_yyyy_mm_dd))
         div.form-group
             label(for='production_end') production ended:
-            input#production_end.form-control(type='date' placeholder='Date' name='production_end' value=(undefined === model ? '' : model.production_end))
+            input#production_end.form-control(type='date' placeholder='Date' name='production_end' value=(undefined === model ? '' : model.production_start_yyyy_mm_dd))
         div.form-group
             label(for='type') type:
             select#type.form-control(type='select' placeholder='Select status' name='type' required='true')

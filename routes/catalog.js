@@ -16,8 +16,8 @@ router.post('/brand/create', brand_controller.brand_create_post);
 router.get('/brand/:id/delete', brand_controller.brand_delete_get);
 router.post('/brand/:id/delete', brand_controller.brand_delete_post);
 
-router.get('/brand/update/:id', brand_controller.brand_update_get);
-router.post('/brand/update/:id', brand_controller.brand_update_post);
+// router.get('/brand/update/:id', brand_controller.brand_update_get);
+// router.post('/brand/update/:id', brand_controller.brand_update_post);
 
 router.get('/brand/:id', brand_controller.brand_detail);
 router.get('/brands', brand_controller.brand_list);
@@ -32,8 +32,8 @@ router.post('/model/create', model_controller.model_create_post);
 router.get('/model/:id/delete', model_controller.model_delete_get);
 router.post('/model/:id/delete', model_controller.model_delete_post);
 
-// router.get('/model/update/:id', model_controller.model_update_get);
-// router.post('/model/update/:id', model_controller.model_update_post);
+router.get('/model/:id/update', model_controller.model_update_get);
+router.post('/model/:id/update', model_controller.model_update_post);
 
 router.get('/model/:id', model_controller.model_detail);
 router.get('/models', model_controller.model_list);
