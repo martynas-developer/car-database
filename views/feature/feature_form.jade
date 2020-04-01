@@ -14,5 +14,5 @@ block content
             input#name.form-control(type='text' required=true placeholder='name of feature' name='name' value=(undefined===feature ? '' : feature.name))
         div.form-group
             label(for='description') Description:
-            textarea#description.form-control(placeholder='Description' name='description' value=(undefined === brand ? '' : brand.description))
+            textarea#description.form-control(placeholder='Description' name='description') #{(undefined === feature ? '' : feature.description)}
         button.btn.btn-primary(type='submit') Submit

@@ -227,7 +227,7 @@ exports.model_update_post = [
                         results.features[i].checked='true';
                     }
                 }
-                res.render('model/model_form', { title: 'Create model', brands: results.brands, features: results.features, model: model, errors: errors.array() });
+                res.render('model/model_form', { title: 'Update model', brands: results.brands, features: results.features, model: model, errors: errors.array() });
             });
             return;
         }

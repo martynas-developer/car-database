@@ -47,8 +47,8 @@ router.post('/feature/create', feature_controller.feature_create_post);
 router.get('/feature/:id/delete', feature_controller.feature_delete_get);
 router.post('/feature/:id/delete', feature_controller.feature_delete_post);
 
-// router.get('/feature/update/:id', feature_controller.feature_update_get);
-// router.post('/feature/update/:id', feature_controller.feature_update_post);
+router.get('/feature/:id/update', feature_controller.feature_update_get);
+router.post('/feature/:id/update', feature_controller.feature_update_post);
 
 router.get('/feature/:id', feature_controller.feature_detail);
 router.get('/features', feature_controller.feature_list);
