@@ -52,7 +52,7 @@ exports.feature_create_post =  [
     (req, res, next) => {
 
         // Extract the validation errors from a request.
-        const errors = validator.validationResult(req);
+        const errors = validationResult(req);
 
         // Create a feature object with escaped and trimmed data.
         var feature = new Feature(

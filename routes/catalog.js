@@ -13,11 +13,11 @@ router.get('/', brand_controller.index);
 router.get('/brand/create', brand_controller.brand_create_get);
 router.post('/brand/create', brand_controller.brand_create_post);
 
-// router.get('/brand/delete/:id', brand_controller.brand_delete_get);
-// router.post('/brand/delete/:id', brand_controller.brand_delete_post);
-//
-// router.get('/brand/update/:id', brand_controller.brand_update_get);
-// router.post('/brand/update/:id', brand_controller.brand_update_post);
+router.get('/brand/:id/delete', brand_controller.brand_delete_get);
+router.post('/brand/:id/delete', brand_controller.brand_delete_post);
+
+router.get('/brand/update/:id', brand_controller.brand_update_get);
+router.post('/brand/update/:id', brand_controller.brand_update_post);
 
 router.get('/brand/:id', brand_controller.brand_detail);
 router.get('/brands', brand_controller.brand_list);

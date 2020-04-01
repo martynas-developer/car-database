@@ -73,7 +73,7 @@ exports.brand_create_post = [
     (req, res, next) => {
 
         // Extract the validation errors from a request.
-        const errors = validator.validationResult(req);
+        const errors = validationResult(req);
 
         // Create a genre object with escaped and trimmed data.
         var brand = new Brand(
@@ -114,18 +114,52 @@ exports.brand_create_post = [
     }
 ];
 
-// exports.brand_delete_get = function(req, res) {
-//
-// };
-//
-// exports.brand_delete_post = function(req, res) {
-//
-// };
-//
-// exports.brand_update_get = function(req, res) {
-//
-// };
-//
-// exports.brand_update_post = function(req, res) {
-//
-// };
+exports.brand_delete_get = function(req, res, next) {
+    async.parallel({
+        brand: function(callback) {
+            Brand.findById(req.params.id).exec(callback)
+        },
+        brand_models: function(callback) {
+            Model.find({ 'brand': req.params.id }).exec(callback)
+        },
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.brand==null) {
+            res.redirect('/catalog/brands');
+        }
+        res.render('brand/brand_delete', { title: 'Delete Brand', brand: results.brand, brand_models: results.brand_models } );
+    });
+
+};
+
+exports.brand_delete_post = function(req, res, next) {
+    async.parallel({
+        brand: function(callback) {
+            Brand.findById(req.params.id).exec(callback)
+        },
+        brand_models: function(callback) {
+            Model.find({ 'brand': req.params.id }).exec(callback)
+        },
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.brand_models.length > 0) {
+            res.render('brand/brand_delete', { title: 'Delete Brand', brand: results.brand, brand_models: results.brand_models } );
+            return;
+        }
+        else {
+            // Author has no books. Delete object and redirect to the list of authors.
+            Brand.findByIdAndRemove(req.body.brandid, function deleteBrand(err) {
+                if (err) { return next(err); }
+                res.redirect('/catalog/brands')
+            })
+        }
+    });
+};
+
+exports.brand_update_get = function(req, res) {
+
+};
+
+exports.brand_update_post = function(req, res) {
+
+};
