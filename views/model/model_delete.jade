@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h1 #{title}: #{model.brand.name} #{model.name}
+
+    p Do you really want to delete this Model?
+
+    form(method='POST' action='')
+        div.form-group
+            input#model.form-control(type='hidden',name='modelid', required='true', value=model._id )
+
+        button.btn.btn-primary(type='submit') Delete

@@ -20,7 +20,6 @@ exports.model_detail = function(req, res) {
 
     async.parallel({
         model: function(callback) {
-
             Model.findById(req.params.id)
                 .populate('brand')
                 .exec(callback);
@@ -120,13 +119,24 @@ exports.model_create_post = [
     }
 ];
 
-// exports.model_delete_get = function(req, res) {
-//
-// };
-//
-// exports.model_delete_post = function(req, res) {
-//
-// };
+exports.model_delete_get = function(req, res, next) {
+    Model.findById(req.params.id)
+        .populate('brand')
+        .exec(function (err, model) {
+            if (err) { return next(err); }
+            if (model==null) {
+                res.redirect('/catalog/models');
+            }
+            res.render('model/model_delete', { title: 'Delete Model', model:  model});
+        })
+};
+
+exports.model_delete_post = function(req, res, next) {
+    Model.findByIdAndRemove(req.body.modelid, function deleteModel(err) {
+        if (err) { return next(err); }
+        res.redirect('/catalog/models');
+    });
+};
 //
 // exports.model_update_get = function(req, res) {
 //

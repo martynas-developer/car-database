@@ -29,9 +29,9 @@ router.get('/brands', brand_controller.brand_list);
 router.get('/model/create', model_controller.model_create_get);
 router.post('/model/create', model_controller.model_create_post);
 
-// router.get('/model/delete/:id', model_controller.model_delete_get);
-// router.post('/model/delete/:id', model_controller.model_delete_post);
-//
+router.get('/model/:id/delete', model_controller.model_delete_get);
+router.post('/model/:id/delete', model_controller.model_delete_post);
+
 // router.get('/model/update/:id', model_controller.model_update_get);
 // router.post('/model/update/:id', model_controller.model_update_post);
 
