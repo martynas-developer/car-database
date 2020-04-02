@@ -3,11 +3,41 @@ extends ../layout
 block content
     h1 #{title}
 
-    div(style='margin-left:20px;margin-top:20px')
+    div(class='d-flex justify-content-between align-items-center')
+        div(class='btn-group')
+            a(href=model.url + '/update' type='button' class='btn btn-lg btn-secondary') Update brand
+            a(href=model.url + '/delete' type='button' class='btn btn-lg btn-danger') Delete brand
 
-        dl
-            div #{model.name}
-    p
-        a(href=model.url + '/delete') Delete Model
-    p
-        a(href=model.url + '/update') Update Model
+    hr
+    table(class='table table-dark table-bordered')
+        tbody
+            tr
+                th Type
+                th #{model.type}
+            tr
+                th production start
+                th #{model.production_start_yyyy_mm_dd}
+            tr
+                th production end
+                th #{model.production_end_yyyy_mm_dd}
+
+    hr
+    h4 Features
+    if model.feature.length
+        table(class='table')
+            thead
+                tr
+                    th #
+                    th name
+                    th type
+                    th actions
+            tbody
+                each feature, index in model.feature
+                    tr
+                        th #{index + 1}
+                        td #{feature.name}
+                        td #{feature.description}
+                        td
+                            a(href=feature.url type='button' class='btn btn-sm btn-outline-secondary') View
+    else
+        p This model has no features

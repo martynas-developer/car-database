@@ -15,7 +15,7 @@ var ModelSchema = new Schema(
 );
 
 ModelSchema.virtual('production').get(function () {
-    return (this.production_start.getYear() - this.date_of_birth.production_end()).toString();
+    return (this.production_start.getYear() - this.production_end.getYear()).toString();
 });
 
 ModelSchema.virtual('url').get(function () {

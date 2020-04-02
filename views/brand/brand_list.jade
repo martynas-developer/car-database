@@ -3,12 +3,19 @@ extends ../layout
 block content
     h1= title
 
-    ul
+    div(class='row')
         each brand in brand_list
-            li
-                a(href=brand.url) #{brand.name}
-                span  (#{brand.founded_formatted})
-                if brand.logo
-                    img(src='#{brand.logo_url}' height='50px')
+            div(class='col-md-4')
+                div(class='card mb-4 shadow-sm')
+                    if brand.logo
+                        a(href=brand.url style='display: flex; justify-content: center;')
+                            img(src=brand.logo_url class='img-fluid' alt=brand.name style='object-fit: contain; height:100px')
+                    div(class='card-body')
+                        p(class='card-text') #{brand.name}
+                        p(class='card-text') #{brand.founded_formatted}
+                        div(class='d-flex justify-content-between align-items-center')
+                            div(class='btn-group')
+                                a(href=brand.url type='button' class='btn btn-sm btn-outline-secondary') View
+                                a(href=brand.url + '/update' type='button' class='btn btn-sm btn-outline-secondary') Edit
         else
-            li There are no brands.
+            h2 There are no brands.

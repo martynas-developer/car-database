@@ -3,10 +3,23 @@ extends ../layout
 block content
     h1= title
 
-    ul
-        - model_list.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        each model in model_list
-            li
-                a(href=model.url) #{model.name} - #{model.brand.name}
-        else
-            li There are no models.
+    - model_list.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+    if model_list.length
+        table(class='table')
+            thead
+                tr
+                    th #
+                    th name
+                    th brand
+                    th actions
+            tbody
+                each model, index in model_list
+                    tr
+                        th #{index + 1}
+                        td #{model.name}
+                        td
+                            a(href=model.brand.url) #{model.brand.name}
+                        td
+                            a(href=model.url type='button' class='btn btn-sm btn-outline-secondary') View
+    else
+        h2 There are no models.

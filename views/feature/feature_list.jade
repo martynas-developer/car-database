@@ -3,11 +3,21 @@ extends ../layout
 block content
     h1= title
 
-    ul
-        each feature in feature_list
-            li
-                a(href=feature.url) #{feature.name}
-                p #{feature.description}
-
-        else
-            li There are features.
+    if feature_list.length
+        table(class='table')
+            thead
+                tr
+                    th #
+                    th name
+                    th description
+                    th actions
+            tbody
+                each feature, index in feature_list
+                    tr
+                        th #{index + 1}
+                        td #{feature.name}
+                        td #{feature.description}
+                        td
+                            a(href=feature.url type='button' class='btn btn-sm btn-outline-secondary') View
+    else
+        h2 There are no features.

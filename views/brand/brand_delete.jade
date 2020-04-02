@@ -2,7 +2,6 @@ extends ../layout
 
 block content
     h1 #{title}: #{brand.name}
-    p= brand.founded_formatted
 
     if brand_models.length
 
@@ -22,6 +21,6 @@ block content
 
         form(method='POST' action='')
             div.form-group
-                input#brandid.form-control(type='hidden',name='brandid', required='true', value=brand._id )
+                input#brandid.form-control(type='hidden', name='brandid', required='true', value=brand._id )
 
             button.btn.btn-primary(type='submit') Delete

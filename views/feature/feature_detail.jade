@@ -1,14 +1,12 @@
 extends ../layout
 
 block content
-    p #[strong Name:] #{feature.name}
+    h1 #{title}
+
+    div(class='d-flex justify-content-between align-items-center')
+        div(class='btn-group')
+            a(href=feature.url + '/update' type='button' class='btn btn-lg btn-secondary') Update feature
+            a(href=feature.url + '/delete' type='button' class='btn btn-lg btn-danger') Delete feature
+
+    hr
     p #[strong Description:] #{feature.description}
-    p #[strong Models:]&nbsp;
-        each model in feature_models
-            a(href=model.url) #{model.name}
-        else
-            p There are no models with this feature
-    p
-        a(href=feature.url + '/delete') Delete feature
-    p
-        a(href=feature.url + '/update') Update feature

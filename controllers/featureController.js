@@ -19,12 +19,7 @@ exports.feature_detail = function(req, res, next) {
         feature: function(callback) {
             Feature.findById(req.params.id)
                 .exec(callback);
-        },
-        feature_models: function(callback) {
-            Model.find({ 'feature': req.params.id })
-                .populate('brand')
-                .exec(callback);
-        },
+        }
     }, function(err, results) {
         if (err) { return next(err); }
         if (results.feature==null) {
@@ -32,7 +27,7 @@ exports.feature_detail = function(req, res, next) {
             err.status = 404;
             return next(err);
         }
-        res.render('feature/feature_detail', { title: results.feature.title, feature: results.feature, feature_models: results.feature_models } );
+        res.render('feature/feature_detail', { title: results.feature.name, feature: results.feature } );
     });
 
 };

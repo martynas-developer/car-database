@@ -22,6 +22,7 @@ exports.model_detail = function(req, res) {
         model: function(callback) {
             Model.findById(req.params.id)
                 .populate('brand')
+                .populate('feature')
                 .exec(callback);
         }
     }, function(err, results) {
@@ -31,7 +32,7 @@ exports.model_detail = function(req, res) {
             err.status = 404;
             return next(err);
         }
-        res.render('model/model_detail', { title: results.model.name, model: results.model } );
+        res.render('model/model_detail', { title: results.model.brand.name + ' ' + results.model.name, model: results.model } );
     });
 };
 
