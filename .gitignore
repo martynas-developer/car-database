@@ -117,3 +117,4 @@ dist
 notes.txt
 parameters.json
 public/uploads/*
+.idea
